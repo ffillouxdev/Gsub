@@ -1,0 +1,8 @@
+.git
+.gitattributes
+data
+*.pyc
+__pycache__
+# Binaires Windows inutiles dans l'image Linux
+Gsub/tools/tbl2asn.windows
+Gsub/tools/table2asn.windows

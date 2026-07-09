@@ -1,0 +1,17 @@
+services:
+  gsub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gsub:2.0.0
+    container_name: gsub
+    # Interface graphique : partage du socket X11 de l'hote (Linux).
+    # Avant de lancer : `xhost +local:docker` sur l'hote.
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Repertoire de travail partage pour fournir les entrees / recuperer les sorties.
+      - ./data:/data
+    # Par defaut : GUI. Pour la CLI, voir README.docker.md.
+    command: ["gui"]

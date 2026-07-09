@@ -1,0 +1,6 @@
+# Dossier de travail Docker (fichiers d'entrée/sortie de l'utilisateur)
+data/
+
+# Divers
+__pycache__/
+*.pyc
