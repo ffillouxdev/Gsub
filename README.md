@@ -9,6 +9,24 @@ information and to generate the corresponding sqn file for each sequence.
 The python packages *Gooey* and [Pyinstaller 5.2](https://pyinstaller.org/) allow respectively for 
 a graphical interface and to run Gsub in Windows or Linux without installing a Python interpreter.
 
+# Run with Docker (recommended)
+
+The simplest way to run Gsub on any recent Linux (e.g. Ubuntu 24.04) is via
+Docker: it bundles Python 3.9 and all the original dependencies, so nothing
+depends on your host system. From a fresh machine:
+
+```bash
+sudo apt install -y docker.io git git-lfs && sudo usermod -aG docker $USER
+# (log out / log back in so the docker group applies)
+git clone https://github.com/ffillouxdev/Gsub.git && cd Gsub
+git lfs install && git lfs pull
+docker build -t gsub:2.0.0 . && ./start_gsub.sh
+```
+
+`git lfs pull` is required to resolve the bundled `table2asn` binary. For the
+graphical interface over SSH, connect with `ssh -Y`. Full details (CLI mode,
+shared `data/` folder, troubleshooting) are in [README.docker.md](./README.docker.md).
+
 # Install
 
 They are two differents way to install Gsub tool.

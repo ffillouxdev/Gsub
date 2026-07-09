@@ -3,19 +3,37 @@
 Environnement reproductible pour ce projet de ~2022 (Python 3.9, pyhmmer/gooey
 de l'époque), sans rien installer sur ta machine.
 
+## Démarrage rapide (depuis zéro, ex. Ubuntu 24.04)
+
+```bash
+sudo apt install -y docker.io git git-lfs && sudo usermod -aG docker $USER
+# (reconnexion de session pour que le groupe docker prenne effet)
+git clone https://github.com/ffillouxdev/Gsub.git && cd Gsub
+git lfs install && git lfs pull
+docker build -t gsub:2.0.0 . && ./start_gsub.sh
+```
+
+> ⚠️ `git lfs pull` est **indispensable** : il résout `Gsub/tools/table2asn.linux`
+> (~190 Mo). Sans lui, ce fichier reste un pointeur de 134 octets et l'appli
+> plante à la génération des fichiers. Vérifie avec :
+> `ls -lh Gsub/tools/table2asn.linux` (doit faire ~190M).
+>
+> Interface graphique : sur un écran local ça marche directement ; via SSH,
+> connecte-toi avec `ssh -Y`.
+
 ## Construction de l'image
 
 ```bash
-docker compose build
-# ou :  docker build -t gsub:2.0.0 .
+docker build -t gsub:2.0.0 .
+# ou (si docker compose est installé) :  docker compose build
 ```
 
 Le build :
 - part d'une image `python:3.9-slim-bullseye` ;
 - installe wxPython (interface Gooey) via les wheels précompilées de l'époque ;
 - fige les dépendances Python dans `docker/requirements.lock.txt` ;
-- télécharge `table2asn` officiel de NCBI (les binaires du repo sont en git-lfs
-  et ne sont pas résolus par un simple clone).
+- utilise le binaire `table2asn` d'origine du projet (résolu par `git lfs pull`),
+  et non une version récente : le code attend son comportement exact.
 
 ## Mode ligne de commande (recommandé, sans interface)
 
