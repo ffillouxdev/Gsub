@@ -24,8 +24,15 @@ docker build -t gsub:2.0.0 . && ./start_gsub.sh
 ```
 
 `git lfs pull` is required to resolve the bundled `table2asn` binary. For the
-graphical interface over SSH, connect with `ssh -Y`. Full details (CLI mode,
-shared `data/` folder, troubleshooting) are in [README.docker.md](./README.docker.md).
+graphical interface over SSH, connect with `ssh -Y`.
+
+**Input/output files go through the `data/` folder**, which is shared between
+your machine and the container (mounted as `/data`). Put your inputs in `./data`,
+and in the interface always use `/data/...` paths (e.g. `Output = /data/my_run`);
+anything written elsewhere in the container is lost when it stops. Results then
+appear in `./data/my_run/` on your host.
+
+Full details (CLI mode, troubleshooting) are in [README.docker.md](./README.docker.md).
 
 # Install
 
