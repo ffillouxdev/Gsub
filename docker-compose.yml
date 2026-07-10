@@ -9,11 +9,6 @@ services:
     # Avant de lancer : `xhost +local:docker` sur l'hote.
     environment:
       - DISPLAY=${DISPLAY}
-    # Aucun acces reseau : table2asn fonctionne hors-ligne (donnees taxonomie
-    # integrees) et la GUI passe par le socket X11. Evite les timeouts reseau
-    # de table2asn (verif de version + lookup taxonomie) qui ralentissent
-    # fortement le traitement (~74 s -> quelques secondes).
-    network_mode: "none"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       # Repertoire de travail partage pour fournir les entrees / recuperer les sorties.
