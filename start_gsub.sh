@@ -23,7 +23,11 @@ if [ -z "${DISPLAY:-}" ]; then
 fi
 
 mkdir -p data
-RUN_ARGS=(--rm -it -e "DISPLAY=$DISPLAY" -v "$PWD/data":/data)
+# Transmet l'identite de l'utilisateur hote : l'entrypoint abandonne les
+# privileges root pour que les fichiers generes dans data/ lui appartiennent.
+RUN_ARGS=(--rm -it -e "DISPLAY=$DISPLAY" \
+          -e "HOST_UID=$(id -u)" -e "HOST_GID=$(id -g)" \
+          -v "$PWD/data":/data)
 
 case "$DISPLAY" in
   :*)

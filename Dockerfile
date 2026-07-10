@@ -11,8 +11,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
 #  * GTK / libSDL / etc. : runtime de wxPython (l'interface Gooey)
 #  * libgomp1, libidn11 : requis par le binaire table2asn de NCBI
 #  * ca-certificates, wget : téléchargement de table2asn
+#  * gosu, passwd : abandon des privilèges root vers l'utilisateur hôte
+#    (fichiers générés dans /data appartenant à l'utilisateur, cf entrypoint.sh)
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates wget \
+        gosu passwd \
         libgtk-3-0 libgomp1 libidn11 \
         libsdl2-2.0-0 libnotify4 libsm6 libxxf86vm1 libgl1 \
         libpng16-16 libjpeg62-turbo libtiff5 \

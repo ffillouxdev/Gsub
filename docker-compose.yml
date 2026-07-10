@@ -9,6 +9,13 @@ services:
     # Avant de lancer : `xhost +local:docker` sur l'hote.
     environment:
       - DISPLAY=${DISPLAY}
+      # Identite de l'utilisateur hote : l'entrypoint abandonne les privileges
+      # root pour que les fichiers generes dans data/ lui appartiennent.
+      # Si non definies, l'entrypoint retombe sur le proprietaire du volume
+      # /data. Pour les fixer explicitement :
+      #   HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up
+      - HOST_UID=${HOST_UID:-}
+      - HOST_GID=${HOST_GID:-}
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       # Repertoire de travail partage pour fournir les entrees / recuperer les sorties.
