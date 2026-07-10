@@ -419,7 +419,7 @@ def create_submit_file(fasta, template, src_file, output, minlengthorf, minlengt
         lineage = dico_description[seq_id]['lineage']
         feature = feature + f" [lineage={lineage}]"
         # Use tbl2asn tools for generate from fasta & tbl the seq file in ASN.1 format
-        subprocess.run(f'{tbl2asn_tool} -t {template} -i {fasta_tmp} -j "{feature}" -V bv',
+        subprocess.run(f'{tbl2asn_tool} -t "{template}" -i "{fasta_tmp}" -j "{feature}" -V bv',
                        stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT, shell=True)
         #######################################################
     return liste_kept
